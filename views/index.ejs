@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoTrack | Agenda 2030</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <h1>🌱 EcoTrack</h1>
+        <p>Monitora la tua impronta ecologica per l'Agenda 2030</p>
+    </header>
+
+    <main class="container">
+        <section class="card">
+            <h2>Inserisci i tuoi consumi</h2>
+            <form action="/calcola" method="POST">
+                <label for="km">Km percorsi oggi (auto):</label>
+                <input type="number" id="km" name="km" placeholder="Esempio: 15" required>
+                
+                <label for="pasto">Tipo di pasto:</label>
+                <select id="pasto" name="pasto">
+                    <option value="vegano">Vegano (Basso impatto)</option>
+                    <option value="vegetariano">Vegetariano (Medio impatto)</option>
+                    <option value="carne">Carne (Alto impatto)</option>
+                </select>
+
+                <button type="submit">Calcola Impronta</button>
+            </form>
+        </section>
+
+        <section class="info-civica">
+            <h3>Perché è importante?</h3>
+            <p>L'obiettivo 12 dell'Agenda 2030 mira a garantire modelli sostenibili di produzione e di consumo. Ogni tua scelta conta.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Progetto Educazione Civica - Classe 5^</p>
+    </footer>
+
+</body>
+</html>
