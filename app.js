@@ -13,11 +13,9 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Rotta di prova
-// Trova questa parte nel tuo app.js e modificala così:
-app.get('/', (req, res) => {
-    res.render('index'); // Questo cercherà il file views/index.ejs
-});
+// Sostituisci la vecchia rotta app.get('/', ...) con:
+const indexRouter = require('./routes/index');
+app.use('/', indexRouter);
 
 const PORT = 3000;
 app.listen(PORT, () => {

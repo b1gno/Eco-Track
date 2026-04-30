@@ -36,6 +36,15 @@
             <h3>Perché è importante?</h3>
             <p>L'obiettivo 12 dell'Agenda 2030 mira a garantire modelli sostenibili di produzione e di consumo. Ogni tua scelta conta.</p>
         </section>
+
+        <% if (risultato) { %>
+            <section class="card result">
+                <h2>Il tuo impatto: <%= risultato.totale %> kg di CO₂</h2>
+                <p>🚗 Trasporto: <%= risultato.dettaglio.km %> kg</p>
+                <p>🍽️ Alimentazione: <%= risultato.dettaglio.pasto %> kg</p>
+                <p><em>Equivale a circa <%= (risultato.totale / 0.06).toFixed(0) %> ore di una lampadina accesa!</em></p>
+            </section>
+        <% } %>
     </main>
 
     <footer>
