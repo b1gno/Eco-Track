@@ -13,9 +13,10 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Sostituisci la vecchia rotta app.get('/', ...) con:
-const indexRouter = require('./routes/index');
-app.use('/', indexRouter);
+// Rotte principali
+app.use('/', require('./routes/pages'));
+// app.use('/api', require('./routes/api'));
+// app.use('/auth', require('./routes/auth'));
 
 const PORT = 3000;
 app.listen(PORT, () => {
