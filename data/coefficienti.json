@@ -1,0 +1,17 @@
+{
+  "transport": {
+    "auto_km": 0.12,
+    "bus_km": 0.03,
+    "train_km": 0.02,
+    "bike_km": 0
+  },
+  "food": {
+    "vegano": 0.5,
+    "vegetariano": 1.2,
+    "carne": 3.5,
+    "pesce": 2.8
+  },
+  "energy": {
+    "kwh": 0.45
+  }
+}

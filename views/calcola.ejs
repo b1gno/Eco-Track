@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcola Impronta | EcoTrack</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- velocizza il caricamento dei font -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/calcola.css">
+</head>
+<body>
+
+<nav>
+    <a href="/" class="nav-logo">Eco<span>Track</span></a>
+    <a href="/" class="back-link"> Torna alla home</a>
+</nav>
+
+<div class="page-wrap">
+    <!-- FORM -->
+    <div class="form-side">
+        <div class="page-tag">🌱 Calcolatore CO₂</div>
+        <h1>Misura la tua<br><em>impronta</em><br>oggi</h1>
+
+        <form action="/calcola" method="POST">
+            <div class="form-group">
+                <label for="km">Chilometri percorsi in auto</label>
+                <input type="number" id="km" name="km" placeholder="Esempio: 25" min="0" step="0.1" required value="<%= km || '' %>">
+                <div class="input-hint">Inserisci 0 se non hai usato l'auto oggi</div>
+            </div>
+
+            <div class="form-group">
+                <label>Tipo di pasto principale</label>
+                <div class="diet-options">
+                    <label class="diet-btn <%= pasto === 'vegano' ? 'active' : '' %>">
+                        <input type="radio" name="pasto" value="vegano" <%= pasto === 'vegano' ? 'checked' : '' %>>
+                        <span class="d-emoji">🥦</span>
+                        <span>Vegano</span>
+                    </label>
+                    <label class="diet-btn <%= pasto === 'vegetariano' ? 'active' : '' %>">
+                        <input type="radio" name="pasto" value="vegetariano" <%= pasto === 'vegetariano' ? 'checked' : '' %>>
+                        <span class="d-emoji">🥚</span>
+                        <span>Vegetariano</span>
+                    </label>
+                    <label class="diet-btn <%= (!pasto || pasto === 'carne') ? 'active' : '' %>">
+                        <input type="radio" name="pasto" value="carne" <%= (!pasto || pasto === 'carne') ? 'checked' : '' %>>
+                        <span class="d-emoji">🥩</span>
+                        <span>Con carne</span>
+                    </label>
+                </div>
+                <div class="input-hint">L'impatto alimentare è calcolato per un pasto medio</div>
+            </div>
+
+            <button type="submit" class="submit-btn">Calcola il mio impatto</button>
+        </form>
+    </div>
+
+    <!-- RESULT -->
+    <div class="result-side">
+        <% if (risultato) { %>
+            <div class="result-card">
+                <div class="result-label">La tua impronta di oggi</div>
+                <div class="result-total"><%= risultato.totale %></div>
+                <div class="result-unit">kg di CO₂ emessi</div>
+
+                <div class="result-breakdown">
+                    <div class="breakdown-row">
+                        <span class="br-icon">🚗</span>
+                        <span class="br-name">Trasporto in auto</span>
+                        <span class="br-val"><%= risultato.dettaglio.km %> kg</span>
+                    </div>
+                    <div class="breakdown-row">
+                        <span class="br-icon">🍽️</span>
+                        <span class="br-name">Alimentazione</span>
+                        <span class="br-val"><%= risultato.dettaglio.pasto %> kg</span>
+                    </div>
+                </div>
+
+                <div class="equiv-box">
+                    💡 Equivale a circa <strong><%= (risultato.totale / 0.06).toFixed(0) %> ore</strong> di una lampadina accesa,
+                    oppure a <strong><%= (risultato.totale / 22).toFixed(3) %></strong> alberi necessari per assorbirlo in un anno.
+                </div>
+
+                <%
+                    var tot = parseFloat(risultato.totale);
+                    var verdictClass = tot < 2 ? 'verdict-low' : tot < 5 ? 'verdict-mid' : 'verdict-high';
+                    var verdictMsg = tot < 2
+                        ? '✅ Ottimo! La tua impronta oggi è bassa. Continua così!'
+                        : tot < 5
+                        ? '⚠️ Nella media. Piccoli aggiustamenti possono fare la differenza.'
+                        : '🔴 Alta impronta. Considera alternative sostenibili per trasporto e alimentazione.';
+                %>
+                <div class="verdict <%= verdictClass %>">
+                    <%= verdictMsg %>
+                </div>
+            </div>
+        <% } else { %>
+            <div class="result-placeholder">
+                <div class="ph-icon">🌍</div>
+                <p>Compila il modulo e premi <em>"Calcola"</em> per vedere la tua impronta ecologica di oggi con la relativa analisi.</p>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<script>
+    // Diet button toggle visual
+    document.querySelectorAll('.diet-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.diet-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>

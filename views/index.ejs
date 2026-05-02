@@ -4,52 +4,253 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EcoTrack | Agenda 2030</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- velocizza il caricamento dei font -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <header>
-        <h1>🌱 EcoTrack</h1>
-        <p>Monitora la tua impronta ecologica per l'Agenda 2030</p>
-    </header>
+<!-- NAV -->
+<nav>
+    <a href="/" class="nav-logo">Eco<span>Track</span></a>
+    <ul class="nav-links">
+        <li><a href="#agenda">Agenda 2030</a></li>
+        <li><a href="#impatto">Impatto</a></li>
+        <li><a href="#consigli">Consigli</a></li>
+        <li><a href="/calcola" class="nav-cta">Calcola Impronta</a></li>
+    </ul>
+</nav>
 
-    <main class="container">
-        <section class="card">
-            <h2>Inserisci i tuoi consumi</h2>
-            <form action="/calcola" method="POST">
-                <label for="km">Km percorsi oggi (auto):</label>
-                <input type="number" id="km" name="km" placeholder="Esempio: 15" required>
-                
-                <label for="pasto">Tipo di pasto:</label>
-                <select id="pasto" name="pasto">
-                    <option value="vegano">Vegano (Basso impatto)</option>
-                    <option value="vegetariano">Vegetariano (Medio impatto)</option>
-                    <option value="carne">Carne (Alto impatto)</option>
-                </select>
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-grid-lines"></div>
+    <div class="hero-orb"></div>
+    <div class="hero-content">
+        <h1 class="hero-title">
+            Il pianeta<br>
+            non aspetta.<br>
+            <em>Nemmeno noi.</em>
+        </h1>
+        <p class="hero-desc">
+            EcoTrack ti aiuta a misurare la tua impronta di carbonio quotidiana e a capire come le tue scelte — trasporti, alimentazione, energia — impattano sul futuro del pianeta.
+        </p>
+        <div class="hero-actions">
+            <a href="/calcola" class="btn-primary">Calcola la tua impronta</a>
+            <a href="#agenda" class="btn-secondary">Scopri l'Agenda 2030</a>
+        </div>
+    </div>
+    <div class="hero-visual">
+        <div class="sdg-circle">
+            <div class="sdg-dot"></div>
+            <div class="sdg-inner">
+                <div class="sdg-label">Obiettivo</div>
+                <div class="sdg-number">12</div>
+                <div class="sdg-label">SDG</div>
+            </div>
+        </div>
+    </div>
+</section>
 
-                <button type="submit">Calcola Impronta</button>
-            </form>
-        </section>
+<!-- STATS BAR -->
+<div class="stats-bar">
+    <div class="stat-item">
+        <div class="stat-num">1.5°C</div>
+        <div class="stat-label">Soglia critica riscaldamento globale</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-num">17</div>
+        <div class="stat-label">Obiettivi dell'Agenda 2030</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-num">4.7t</div>
+        <div class="stat-label">CO₂ media pro-capite in Italia/anno</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-num">2030</div>
+        <div class="stat-label">Anno target per gli obiettivi ONU</div>
+    </div>
+</div>
 
-        <section class="info-civica">
-            <h3>Perché è importante?</h3>
-            <p>L'obiettivo 12 dell'Agenda 2030 mira a garantire modelli sostenibili di produzione e di consumo. Ogni tua scelta conta.</p>
-        </section>
+<!-- AGENDA 2030 -->
+<section class="agenda-section" id="agenda">
+    <div class="agenda-grid">
+        <div class="agenda-text">
+            <span class="section-tag">ONU · 2015</span>
+            <h2 class="section-title">L'Agenda 2030 per lo <em>Sviluppo Sostenibile</em></h2>
+            <p class="section-desc">
+                L'Agenda 2030 è un piano d'azione globale adottato da 193 paesi nel settembre 2015. Definisce 17 Obiettivi di Sviluppo Sostenibile (SDGs) che coprono sfide fondamentali: povertà, salute, istruzione, disuguaglianze, cambiamento climatico, biodiversità.
+            </p>
+            <div class="highlight-box">
+                <strong>Obiettivo 12 — Consumo e produzione responsabili:</strong><br>
+                Garantire modelli sostenibili di produzione e di consumo. Entro il 2030, dimezzare lo spreco alimentare globale pro capite e ridurre significativamente la generazione di rifiuti.
+            </div>
+        </div>
+        <div>
+            <div class="sdg-goals">
+                <div class="sdg-goal g1"><div class="g-num">1</div>Povertà zero</div>
+                <div class="sdg-goal g2"><div class="g-num">2</div>Fame zero</div>
+                <div class="sdg-goal g3"><div class="g-num">3</div>Salute e benessere</div>
+                <div class="sdg-goal g4"><div class="g-num">4</div>Istruzione di qualità</div>
+                <div class="sdg-goal g5"><div class="g-num">5</div>Parità di genere</div>
+                <div class="sdg-goal g6"><div class="g-num">6</div>Acqua pulita</div>
+                <div class="sdg-goal g7"><div class="g-num">7</div>Energia pulita</div>
+                <div class="sdg-goal g8"><div class="g-num">8</div>Lavoro dignitoso</div>
+                <div class="sdg-goal g9"><div class="g-num">9</div>Industria e innovazione</div>
+                <div class="sdg-goal g10"><div class="g-num">10</div>Ridurre disuguaglianze</div>
+                <div class="sdg-goal g11"><div class="g-num">11</div>Città sostenibili</div>
+                <div class="sdg-goal g12"><div class="g-num">12</div>Consumo responsabile</div>
+                <div class="sdg-goal g13"><div class="g-num">13</div>Lotta al clima</div>
+                <div class="sdg-goal g14"><div class="g-num">14</div>Vita acquatica</div>
+                <div class="sdg-goal g15"><div class="g-num">15</div>Vita sulla terra</div>
+                <div class="sdg-goal g16"><div class="g-num">16</div>Pace e giustizia</div>
+                <div class="sdg-goal g17"><div class="g-num">17</div>Partnership</div>
+            </div>
+        </div>
+    </div>
+</section>
 
-        <% if (risultato) { %>
-            <section class="card result">
-                <h2>Il tuo impatto: <%= risultato.totale %> kg di CO₂</h2>
-                <p>🚗 Trasporto: <%= risultato.dettaglio.km %> kg</p>
-                <p>🍽️ Alimentazione: <%= risultato.dettaglio.pasto %> kg</p>
-                <p><em>Equivale a circa <%= (risultato.totale / 0.06).toFixed(0) %> ore di una lampadina accesa!</em></p>
-            </section>
-        <% } %>
-    </main>
+<!-- IMPACT CARDS -->
+<section class="impact-section" id="impatto">
+    <div class="impact-header">
+        <span class="section-tag">Dati & Scienza</span>
+        <h2 class="section-title">Perché ogni <em>kg di CO₂</em> conta</h2>
+        <p class="section-desc">Le emissioni di gas serra stanno accelerando il cambiamento climatico. Capire l'origine di queste emissioni è il primo passo per agire.</p>
+    </div>
+    <div class="impact-cards">
+        <div class="impact-card">
+            <div class="card-icon">🚗</div>
+            <div class="card-title">Trasporti privati</div>
+            <div class="card-body">Un'auto a benzina emette in media 120–180g di CO₂ per km. In Italia i trasporti rappresentano circa il 23% delle emissioni totali di gas serra, con le auto private come principale fonte.</div>
+            <div class="card-metric">~0.12 kg CO₂/km</div>
+        </div>
+        <div class="impact-card">
+            <div class="card-icon">🍽️</div>
+            <div class="card-title">Alimentazione</div>
+            <div class="card-body">La produzione di 1 kg di manzo emette circa 27 kg di CO₂ equivalente. Una dieta a base vegetale può ridurre l'impronta alimentare del 50–70% rispetto a una dieta ricca di carne rossa.</div>
+            <div class="card-metric">Carne: 3.5 kg CO₂/pasto</div>
+        </div>
+        <div class="impact-card">
+            <div class="card-icon">⚡</div>
+            <div class="card-title">Energia domestica</div>
+            <div class="card-body">Il riscaldamento e il raffrescamento degli edifici contribuiscono al 40% del consumo energetico europeo. Passare a fonti rinnovabili può abbattere queste emissioni dell'80%.</div>
+            <div class="card-metric">~0.4 kg CO₂/kWh</div>
+        </div>
+    </div>
+</section>
 
-    <footer>
-        <p>&copy; 2026 Progetto Educazione Civica - Classe 5^</p>
-    </footer>
+<!-- CO2 SOURCES -->
+<section class="sources-section">
+    <div class="container-wide"> 
+        <span class="section-tag">Emissioni in Italia</span>
+        <h2 class="section-title">Da dove viene la <em>nostra CO₂</em>?</h2>
+        <p class="section-desc">Dati ISPRA 2023 — distribuzione percentuale delle emissioni di gas serra per settore</p>
+        <div class="sources-grid">
+            <div class="source-row">
+                <div class="source-emoji">⚡</div>
+                <div class="source-info">
+                    <div class="source-name">Produzione energetica</div>
+                    <div class="source-bar-wrap"><div class="source-bar width-38 bg-38"></div></div>
+                </div>
+                <div class="source-pct">38%</div>
+            </div>
+            <div class="source-row">
+                <div class="source-emoji">🚗</div>
+                <div class="source-info">
+                    <div class="source-name">Trasporti</div>
+                    <div class="source-bar-wrap"><div class="source-bar width-23 bg-23"></div></div>
+                </div>
+                <div class="source-pct">23%</div>
+            </div>
+            <div class="source-row">
+                <div class="source-emoji">🏭</div>
+                <div class="source-info">
+                    <div class="source-name">Industria manifatturiera</div>
+                    <div class="source-bar-wrap"><div class="source-bar width-19 bg-19"></div></div>
+                </div>
+                <div class="source-pct">19%</div>
+            </div>
+            <div class="source-row">
+                <div class="source-emoji">🏠</div>
+                <div class="source-info">
+                    <div class="source-name">Edifici e riscaldamento</div>
+                    <div class="source-bar-wrap"><div class="source-bar width-13 bg-13"></div></div>
+                </div>
+                <div class="source-pct">13%</div>
+            </div>
+            <div class="source-row">
+                <div class="source-emoji">🌾</div>
+                <div class="source-info">
+                    <div class="source-name">Agricoltura e allevamento</div>
+                    <div class="source-bar-wrap"><div class="source-bar width-10 bg-10"></div></div>
+                </div>
+                <div class="source-pct">10%</div>
+            </div>
+            <div class="source-row">
+                <div class="source-emoji">🗑️</div>
+                <div class="source-info">
+                    <div class="source-name">Rifiuti e discariche</div>
+                    <div class="source-bar-wrap"><div class="source-bar width-7 bg-7"></div></div>
+                </div>
+                <div class="source-pct">7%</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TIPS -->
+<section class="tips-section" id="consigli">
+    <div class="container-wide"> 
+        <span class="section-tag">Azioni concrete</span>
+        <h2 class="section-title">Come <em>ridurre</em> la tua impronta</h2>
+        <p class="section-desc">Piccoli cambiamenti quotidiani che fanno la differenza — per te e per il pianeta.</p>
+        <div class="tips-grid">
+            <div class="tip-card">
+                <div class="tip-num">01</div>
+                <div class="tip-title">🚲 Muoviti in modo sostenibile</div>
+                <div class="tip-body">Sostituire 1 viaggio in auto con bici o trasporto pubblico elimina in media 2,6 kg di CO₂ al giorno. In un anno equivale a piantare 47 alberi.</div>
+            </div>
+            <div class="tip-card">
+                <div class="tip-num">02</div>   
+                <div class="tip-title">🥗 Riduci il consumo di carne</div>
+                <div class="tip-body">Un giorno alla settimana senza carne rossa risparmia circa 120 kg di CO₂ all'anno — come non guidare per 3 settimane.</div>
+            </div>
+            <div class="tip-card">
+                <div class="tip-num">03</div>
+                <div class="tip-title">💡 Ottimizza l'energia in casa</div>
+                <div class="tip-body">Abbassare il riscaldamento di 2°C riduce le emissioni del 12%. Usare lampadine LED consuma l'80% in meno rispetto alle tradizionali.</div>
+            </div>
+            <div class="tip-card">
+                <div class="tip-num">04</div>
+                <div class="tip-title">♻️ Consuma consapevolmente</div>
+                <div class="tip-body">L'SDG 12 punta a dimezzare lo spreco alimentare globale entro il 2030. Pianificare i pasti riduce dello spreco del 25% e risparmia denaro.</div>
+            </div>
+            <div class="tip-card">
+                <div class="tip-num">05</div>
+                <div class="tip-title">✈️ Ripensa i viaggi aerei</div>
+                <div class="tip-body">Un volo Roma-New York emette circa 1.7 tonnellate di CO₂ per passeggero — quasi la metà dell'impronta annua sostenibile pro-capite.</div>
+            </div>
+            <div class="tip-card">
+                <div class="tip-num">06</div>
+                <div class="tip-title">📱 Sensibilizza la comunità</div>
+                <div class="tip-body">L'azione individuale amplifica quella collettiva. Condividere informazioni accurate e partecipare a iniziative locali moltiplica l'impatto delle scelte personali.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+    <span class="section-tag">Agisci ora</span>
+    <h2 class="section-title text-center">Scopri il tuo impatto<br><em>personale</em> oggi stesso</h2>
+    <p class="section-desc text-center">Inserisci i dati del tuo giorno e ricevi un'analisi immediata della tua impronta ecologica, con suggerimenti su misura per migliorare.</p>
+    <a href="/calcola" class="btn-primary">Inizia il calcolo</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div>© 2026 <strong class="brand">EcoTrack</strong> · Fornaciari Matteo - Lorenzo Bignotti - Nicolò Lamanuzzi</div>
+    <div>Dati basati su fonti ISPRA, IPCC, Our World in Data</div>
+</footer>
 
 </body>
 </html>
