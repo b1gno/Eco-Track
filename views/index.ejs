@@ -117,82 +117,36 @@
         <p class="section-desc">Le emissioni di gas serra stanno accelerando il cambiamento climatico. Capire l'origine di queste emissioni è il primo passo per agire.</p>
     </div>
     <div class="impact-cards">
+        <% impatti.forEach(function(item) { %>
         <div class="impact-card">
-            <div class="card-icon">🚗</div>
-            <div class="card-title">Trasporti privati</div>
-            <div class="card-body">Un'auto a benzina emette in media 120–180g di CO₂ per km. In Italia i trasporti rappresentano circa il 23% delle emissioni totali di gas serra, con le auto private come principale fonte.</div>
-            <div class="card-metric">~0.12 kg CO₂/km</div>
+            <div class="card-icon"><%= item.emoji %></div>
+            <div class="card-title"><%= item.titolo %></div>
+            <div class="card-body"><%= item.testo %></div>
+            <div class="card-metric"><%= item.metrica %></div>
         </div>
-        <div class="impact-card">
-            <div class="card-icon">🍽️</div>
-            <div class="card-title">Alimentazione</div>
-            <div class="card-body">La produzione di 1 kg di manzo emette circa 27 kg di CO₂ equivalente. Una dieta a base vegetale può ridurre l'impronta alimentare del 50–70% rispetto a una dieta ricca di carne rossa.</div>
-            <div class="card-metric">Carne: 3.5 kg CO₂/pasto</div>
-        </div>
-        <div class="impact-card">
-            <div class="card-icon">⚡</div>
-            <div class="card-title">Energia domestica</div>
-            <div class="card-body">Il riscaldamento e il raffrescamento degli edifici contribuiscono al 40% del consumo energetico europeo. Passare a fonti rinnovabili può abbattere queste emissioni dell'80%.</div>
-            <div class="card-metric">~0.4 kg CO₂/kWh</div>
-        </div>
+        <% }); %>
     </div>
 </section>
 
 <!-- CO2 SOURCES -->
 <section class="sources-section">
-    <div class="container-wide"> 
+    <div class="container-wide">
         <span class="section-tag">Emissioni in Italia</span>
         <h2 class="section-title">Da dove viene la <em>nostra CO₂</em>?</h2>
         <p class="section-desc">Dati ISPRA 2023 — distribuzione percentuale delle emissioni di gas serra per settore</p>
         <div class="sources-grid">
+            <% emissioni.forEach(function(source) { %>
             <div class="source-row">
-                <div class="source-emoji">⚡</div>
+                <div class="source-emoji"><%= source.emoji %></div>
                 <div class="source-info">
-                    <div class="source-name">Produzione energetica</div>
-                    <div class="source-bar-wrap"><div class="source-bar width-38 bg-38"></div></div>
+                    <div class="source-name"><%= source.nome %></div>
+                    <div class="source-bar-wrap">
+                        <div class="source-bar" style="width: <%= source.percentuale %>%; background: <%= source.colore %>;"></div>
+                    </div>
                 </div>
-                <div class="source-pct">38%</div>
+                <div class="source-pct"><%= source.percentuale %>%</div>
             </div>
-            <div class="source-row">
-                <div class="source-emoji">🚗</div>
-                <div class="source-info">
-                    <div class="source-name">Trasporti</div>
-                    <div class="source-bar-wrap"><div class="source-bar width-23 bg-23"></div></div>
-                </div>
-                <div class="source-pct">23%</div>
-            </div>
-            <div class="source-row">
-                <div class="source-emoji">🏭</div>
-                <div class="source-info">
-                    <div class="source-name">Industria manifatturiera</div>
-                    <div class="source-bar-wrap"><div class="source-bar width-19 bg-19"></div></div>
-                </div>
-                <div class="source-pct">19%</div>
-            </div>
-            <div class="source-row">
-                <div class="source-emoji">🏠</div>
-                <div class="source-info">
-                    <div class="source-name">Edifici e riscaldamento</div>
-                    <div class="source-bar-wrap"><div class="source-bar width-13 bg-13"></div></div>
-                </div>
-                <div class="source-pct">13%</div>
-            </div>
-            <div class="source-row">
-                <div class="source-emoji">🌾</div>
-                <div class="source-info">
-                    <div class="source-name">Agricoltura e allevamento</div>
-                    <div class="source-bar-wrap"><div class="source-bar width-10 bg-10"></div></div>
-                </div>
-                <div class="source-pct">10%</div>
-            </div>
-            <div class="source-row">
-                <div class="source-emoji">🗑️</div>
-                <div class="source-info">
-                    <div class="source-name">Rifiuti e discariche</div>
-                    <div class="source-bar-wrap"><div class="source-bar width-7 bg-7"></div></div>
-                </div>
-                <div class="source-pct">7%</div>
-            </div>
+            <% }); %>
         </div>
     </div>
 </section>
@@ -204,39 +158,17 @@
         <h2 class="section-title">Come <em>ridurre</em> la tua impronta</h2>
         <p class="section-desc">Piccoli cambiamenti quotidiani che fanno la differenza — per te e per il pianeta.</p>
         <div class="tips-grid">
+            <% consigli.forEach(function(consiglio) { %>
             <div class="tip-card">
-                <div class="tip-num">01</div>
-                <div class="tip-title">🚲 Muoviti in modo sostenibile</div>
-                <div class="tip-body">Sostituire 1 viaggio in auto con bici o trasporto pubblico elimina in media 2,6 kg di CO₂ al giorno. In un anno equivale a piantare 47 alberi.</div>
+                <div class="tip-num"><%= consiglio.numero %></div>
+                <div class="tip-title"><%= consiglio.emoji %> <%= consiglio.titolo %></div>
+                <div class="tip-body"><%= consiglio.testo %></div>
             </div>
-            <div class="tip-card">
-                <div class="tip-num">02</div>   
-                <div class="tip-title">🥗 Riduci il consumo di carne</div>
-                <div class="tip-body">Un giorno alla settimana senza carne rossa risparmia circa 120 kg di CO₂ all'anno — come non guidare per 3 settimane.</div>
-            </div>
-            <div class="tip-card">
-                <div class="tip-num">03</div>
-                <div class="tip-title">💡 Ottimizza l'energia in casa</div>
-                <div class="tip-body">Abbassare il riscaldamento di 2°C riduce le emissioni del 12%. Usare lampadine LED consuma l'80% in meno rispetto alle tradizionali.</div>
-            </div>
-            <div class="tip-card">
-                <div class="tip-num">04</div>
-                <div class="tip-title">♻️ Consuma consapevolmente</div>
-                <div class="tip-body">L'SDG 12 punta a dimezzare lo spreco alimentare globale entro il 2030. Pianificare i pasti riduce dello spreco del 25% e risparmia denaro.</div>
-            </div>
-            <div class="tip-card">
-                <div class="tip-num">05</div>
-                <div class="tip-title">✈️ Ripensa i viaggi aerei</div>
-                <div class="tip-body">Un volo Roma-New York emette circa 1.7 tonnellate di CO₂ per passeggero — quasi la metà dell'impronta annua sostenibile pro-capite.</div>
-            </div>
-            <div class="tip-card">
-                <div class="tip-num">06</div>
-                <div class="tip-title">📱 Sensibilizza la comunità</div>
-                <div class="tip-body">L'azione individuale amplifica quella collettiva. Condividere informazioni accurate e partecipare a iniziative locali moltiplica l'impatto delle scelte personali.</div>
-            </div>
+            <% }); %>
         </div>
     </div>
 </section>
+
 
 <!-- CTA -->
 <section class="cta-section">

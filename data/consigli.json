@@ -1,0 +1,38 @@
+[
+  {
+    "numero": "01",
+    "emoji": "🚲",
+    "titolo": "Muoviti in modo sostenibile",
+    "testo": "Sostituire 1 viaggio in auto con bici o trasporto pubblico elimina in media 2,6 kg di CO₂ al giorno. In un anno equivale a piantare 47 alberi."
+  },
+  {
+    "numero": "02",
+    "emoji": "🥗",
+    "titolo": "Riduci il consumo di carne",
+    "testo": "Un giorno alla settimana senza carne rossa risparmia circa 120 kg di CO₂ all'anno — come non guidare per 3 settimane."
+  },
+  {
+    "numero": "03",
+    "emoji": "💡",
+    "titolo": "Ottimizza l'energia in casa",
+    "testo": "Abbassare il riscaldamento di 2°C riduce le emissioni del 12%. Usare lampadine LED consuma l'80% in meno rispetto alle tradizionali."
+  },
+  {
+    "numero": "04",
+    "emoji": "♻️",
+    "titolo": "Consuma consapevolmente",
+    "testo": "L'SDG 12 punta a dimezzare lo spreco alimentare globale entro il 2030. Pianificare i pasti riduce lo spreco del 25% e risparmia denaro."
+  },
+  {
+    "numero": "05",
+    "emoji": "✈️",
+    "titolo": "Ripensa i viaggi aerei",
+    "testo": "Un volo Roma-New York emette circa 1.7 tonnellate di CO₂ per passeggero — quasi la metà dell'impronta annua sostenibile pro-capite."
+  },
+  {
+    "numero": "06",
+    "emoji": "📱",
+    "titolo": "Sensibilizza la comunità",
+    "testo": "L'azione individuale amplifica quella collettiva. Condividere informazioni accurate e partecipare a iniziative locali moltiplica l'impatto delle scelte personali."
+  }
+]
