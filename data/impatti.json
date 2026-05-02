@@ -1,0 +1,20 @@
+[
+  {
+    "emoji": "🚗",
+    "titolo": "Trasporti privati",
+    "testo": "Un'auto a benzina emette in media 120–180g di CO₂ per km. In Italia i trasporti rappresentano circa il 23% delle emissioni totali di gas serra, con le auto private come principale fonte.",
+    "metrica": "~0.12 kg CO₂/km"
+  },
+  {
+    "emoji": "🍽️",
+    "titolo": "Alimentazione",
+    "testo": "La produzione di 1 kg di manzo emette circa 27 kg di CO₂ equivalente. Una dieta a base vegetale può ridurre l'impronta alimentare del 50–70% rispetto a una dieta ricca di carne rossa.",
+    "metrica": "Carne: 3.5 kg CO₂/pasto"
+  },
+  {
+    "emoji": "⚡",
+    "titolo": "Energia domestica",
+    "testo": "Il riscaldamento e il raffrescamento degli edifici contribuiscono al 40% del consumo energetico europeo. Passare a fonti rinnovabili può abbattere queste emissioni dell'80%.",
+    "metrica": "~0.4 kg CO₂/kWh"
+  }
+]

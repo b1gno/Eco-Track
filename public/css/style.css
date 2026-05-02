@@ -19,11 +19,6 @@ body {
 
 /* CO2 Bars */
 .source-bar { height: 8px; border-radius: 6px; width: 100%; }
-.width-38 { width: 38%; } .width-23 { width: 23%; } .width-19 { width: 19%; }
-.width-13 { width: 13%; } .width-10 { width: 10%; } .width-7  { width: 7%; }
-.bg-38 { background: #e5243b; } .bg-23 { background: #fd9d24; }
-.bg-19 { background: #fcc30b; } .bg-13 { background: #26bde2; }
-.bg-10 { background: #4c9f38; } .bg-7  { background: #bf8b2e; }
 
 /* ── NAV ── */
 nav {
@@ -172,7 +167,7 @@ section { padding: 7rem 4rem; }
     align-items: center; max-width: 1200px; margin: 0 auto;
 }
 .sdg-goals {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: .7rem; margin-top: 1%;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: .7rem; margin-top: 1%; color: #fff;
 }
 .sdg-goal {
     aspect-ratio: 1; border-radius: 10px; display: flex; flex-direction: column;
@@ -181,15 +176,15 @@ section { padding: 7rem 4rem; }
 }
 .sdg-goal:hover { transform: scale(1.08); box-shadow: 0 8px 24px rgba(0,0,0,.15); }
 .sdg-goal .g-num { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; line-height: 1; margin-bottom: .2rem; }
-.g1 { background: #e5243b; color: #fff; } .g2 { background: #DDA63A; color: #fff; }
-.g3 { background: #4C9F38; color: #fff; } .g4 { background: #C5192D; color: #fff; }
-.g5 { background: #FF3A21; color: #fff; } .g6 { background: #26BDE2; color: #fff; }
-.g7 { background: #FCC30B; color: #fff; } .g8 { background: #A21942; color: #fff; }
-.g9 { background: #FD6925; color: #fff; } .g10 { background: #DD1367; color: #fff; }
-.g11 { background: #FD9D24; color: #fff; } .g12 { background: #BF8B2E; color: #fff; }
-.g13 { background: #3F7E44; color: #fff; } .g14 { background: #0A97D9; color: #fff; }
-.g15 { background: #56C02B; color: #fff; } .g16 { background: #00689D; color: #fff; }
-.g17 { background: #19486A; color: #fff; }
+.g1 { background: #e5243b; } .g2 { background: #DDA63A; }
+.g3 { background: #4C9F38; } .g4 { background: #C5192D; }
+.g5 { background: #FF3A21; } .g6 { background: #26BDE2; }
+.g7 { background: #FCC30B; } .g8 { background: #A21942; }
+.g9 { background: #FD6925; } .g10 { background: #DD1367; }
+.g11 { background: #FD9D24; } .g12 { background: #BF8B2E; }
+.g13 { background: #3F7E44; } .g14 { background: #0A97D9; }
+.g15 { background: #56C02B; } .g16 { background: #00689D; }
+.g17 { background: #19486A; }
 
 .agenda-text .highlight-box {
     background: linear-gradient(135deg, rgba(74,140,63,.08), rgba(168,224,99,.12));

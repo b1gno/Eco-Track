@@ -1,0 +1,38 @@
+[
+  {
+    "emoji": "⚡",
+    "nome": "Produzione energetica",
+    "percentuale": 38,
+    "colore": "#e5243b"
+  },
+  {
+    "emoji": "🚗",
+    "nome": "Trasporti",
+    "percentuale": 23,
+    "colore": "#fd9d24"
+  },
+  {
+    "emoji": "🏭",
+    "nome": "Industria manifatturiera",
+    "percentuale": 19,
+    "colore": "#fcc30b"
+  },
+  {
+    "emoji": "🏠",
+    "nome": "Edifici e riscaldamento",
+    "percentuale": 13,
+    "colore": "#26bde2"
+  },
+  {
+    "emoji": "🌾",
+    "nome": "Agricoltura e allevamento",
+    "percentuale": 10,
+    "colore": "#4c9f38"
+  },
+  {
+    "emoji": "🗑️",
+    "nome": "Rifiuti e discariche",
+    "percentuale": 7,
+    "colore": "#bf8b2e"
+  }
+]
