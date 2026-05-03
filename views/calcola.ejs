@@ -1,115 +1,403 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calcola Impronta | EcoTrack</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- velocizza il caricamento dei font -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/calcola.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calcola Impronta | EcoTrack</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/calcola.css">
+  <style>
+    /* ─── Extra styles for expanded quiz ─── */
+    .section-divider {
+      font-size: .7rem; font-weight: 500; text-transform: uppercase;
+      letter-spacing: .12em; color: rgba(168,224,99,.5);
+      margin: 2rem 0 1rem;
+      display: flex; align-items: center; gap: .7rem;
+    }
+    .section-divider::after {
+      content: ''; flex: 1; height: 1px;
+      background: rgba(168,224,99,.1);
+    }
+
+    select {
+      width: 100%; padding: 1rem 1.2rem;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(168,224,99,.15);
+      border-radius: 12px; color: var(--cream);
+      font-family: 'DM Sans', sans-serif; font-size: 1rem;
+      appearance: none; cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23a8e063' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1.2rem center;
+      transition: border-color .25s, background-color .25s;
+    }
+    select:focus { outline: none; border-color: rgba(168,224,99,.5); background-color: rgba(168,224,99,.04); }
+    select option { background: var(--earth); color: var(--cream); }
+
+    /* inline transport row */
+    .transport-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    /* user bar */
+    .user-bar {
+      display: flex; align-items: center; gap: .8rem;
+      font-size: .85rem; color: rgba(245,240,232,.55);
+    }
+    .user-bar strong { color: var(--lime); }
+    .logout-link {
+      color: rgba(245,240,232,.35); text-decoration: none;
+      font-size: .8rem; border: 1px solid rgba(245,240,232,.1);
+      padding: .3rem .8rem; border-radius: 100px;
+      transition: all .2s;
+    }
+    .logout-link:hover { color: var(--err, #f07070); border-color: rgba(240,112,112,.3); }
+
+    /* storico */
+    .storico-section {
+      margin-top: 2rem;
+      border-top: 1px solid rgba(168,224,99,.08);
+      padding-top: 1.5rem;
+    }
+    .storico-title {
+      font-size: .75rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .1em;
+      color: rgba(245,240,232,.35); margin-bottom: 1rem;
+    }
+    .storico-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: .6rem 0; border-bottom: 1px solid rgba(168,224,99,.05);
+      font-size: .82rem;
+    }
+    .storico-row:last-child { border-bottom: none; }
+    .storico-date { color: rgba(245,240,232,.35); }
+    .storico-val { color: var(--lime); font-family: 'Playfair Display', serif; font-weight: 700; }
+    .storico-badge {
+      font-size: .7rem; padding: .15rem .5rem; border-radius: 100px;
+    }
+    .badge-low { background: rgba(76,159,56,.15); color: #8fcf7a; }
+    .badge-mid { background: rgba(252,195,11,.1); color: #f0c040; }
+    .badge-high { background: rgba(229,36,59,.1); color: #f07070; }
+
+    /* ─── Modalità risultato (quiz già compilato oggi) ─── */
+    .mode-risultato {
+      display: block !important; /* override grid */
+      max-width: 960px; margin: 0 auto;
+      padding: 5rem 2rem 6rem;
+    }
+    .risultato-oggi {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .big-total {
+      margin: 1.5rem 0;
+    }
+    .bt-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 5.5rem; font-weight: 900;
+      color: var(--lime); line-height: 1;
+    }
+    .bt-unit {
+      font-size: .95rem; color: rgba(245,240,232,.45);
+      margin-top: .3rem;
+    }
+    .rifai-btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: transparent;
+      border: 1px solid rgba(168,224,99,.3);
+      color: var(--lime);
+      padding: .85rem 1.8rem; border-radius: 12px;
+      font-family: 'DM Sans', sans-serif; font-size: .95rem; font-weight: 500;
+      text-decoration: none; cursor: pointer;
+      transition: background .25s, border-color .25s, transform .2s;
+    }
+    .rifai-btn:hover {
+      background: rgba(168,224,99,.1);
+      border-color: var(--lime);
+      transform: translateY(-2px);
+    }
+    .risultato-oggi-right .result-card { margin-bottom: 0; }
+
+    @media (max-width: 800px) {
+      .risultato-oggi { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+  </style>
 </head>
 <body>
 
 <nav>
-    <a href="/" class="nav-logo">Eco<span>Track</span></a>
-    <a href="/" class="back-link"> Torna alla home</a>
+  <a href="/" class="nav-logo">Eco<span>Track</span></a>
+  <div class="user-bar">
+    <span>Ciao, <strong><%= userName %></strong></span>
+    <a href="/logout" class="logout-link">Esci</a>
+  </div>
 </nav>
 
-<div class="page-wrap">
-    <!-- FORM -->
-    <div class="form-side">
-        <div class="page-tag">🌱 Calcolatore CO₂</div>
-        <h1>Misura la tua<br><em>impronta</em><br>oggi</h1>
+<div class="page-wrap <%= giaCompilato ? 'mode-risultato' : '' %>">
 
-        <form action="/calcola" method="POST">
-            <div class="form-group">
-                <label for="km">Chilometri percorsi in auto</label>
-                <input type="number" id="km" name="km" placeholder="Esempio: 25" min="0" step="0.1" required value="<%= km || '' %>">
-                <div class="input-hint">Inserisci 0 se non hai usato l'auto oggi</div>
-            </div>
+<% if (giaCompilato && risultato) { %>
+  <!-- ─── VISTA RISULTATO (quiz già compilato oggi) ─── -->
+  <div class="risultato-oggi">
+    <div class="risultato-oggi-left">
+      <div class="page-tag">✅ Impronta di oggi registrata</div>
+      <h1>La tua giornata<br><em>in CO₂</em></h1>
 
-            <div class="form-group">
-                <label>Tipo di pasto principale</label>
-                <div class="diet-options">
-                    <label class="diet-btn <%= pasto === 'vegano' ? 'active' : '' %>">
-                        <input type="radio" name="pasto" value="vegano" <%= pasto === 'vegano' ? 'checked' : '' %>>
-                        <span class="d-emoji">🥦</span>
-                        <span>Vegano</span>
-                    </label>
-                    <label class="diet-btn <%= pasto === 'vegetariano' ? 'active' : '' %>">
-                        <input type="radio" name="pasto" value="vegetariano" <%= pasto === 'vegetariano' ? 'checked' : '' %>>
-                        <span class="d-emoji">🥚</span>
-                        <span>Vegetariano</span>
-                    </label>
-                    <label class="diet-btn <%= (!pasto || pasto === 'carne') ? 'active' : '' %>">
-                        <input type="radio" name="pasto" value="carne" <%= (!pasto || pasto === 'carne') ? 'checked' : '' %>>
-                        <span class="d-emoji">🥩</span>
-                        <span>Con carne</span>
-                    </label>
-                </div>
-                <div class="input-hint">L'impatto alimentare è calcolato per un pasto medio</div>
-            </div>
+      <div class="big-total">
+        <div class="bt-num"><%= risultato.totale %></div>
+        <div class="bt-unit">kg di CO₂</div>
+      </div>
 
-            <button type="submit" class="submit-btn">Calcola il mio impatto</button>
-        </form>
+      <%
+        var tot = parseFloat(risultato.totale);
+        var verdictClass = tot < 2 ? 'verdict-low' : tot < 5 ? 'verdict-mid' : 'verdict-high';
+        var verdictMsg = tot < 2
+          ? '✅ Ottimo! La tua impronta oggi è bassa. Continua così!'
+          : tot < 5
+          ? '⚠️ Nella media. Piccoli aggiustamenti possono fare la differenza.'
+          : '🔴 Alta impronta. Considera alternative sostenibili per trasporto e alimentazione.';
+      %>
+      <div class="verdict <%= verdictClass %>" style="margin-bottom:2rem">
+        <%= verdictMsg %>
+      </div>
+
+      <div class="equiv-box" style="margin-bottom:2rem">
+        💡 Equivale a circa <strong><%= (risultato.totale / 0.06).toFixed(0) %> ore</strong> di una lampadina accesa,
+        oppure a <strong><%= (risultato.totale / 22).toFixed(3) %></strong> alberi necessari per assorbirlo in un anno.
+      </div>
+
+      <a href="/calcola?rifai=1" class="rifai-btn">🔄 Rifai il quiz</a>
+      <div class="input-hint" style="margin-top:.8rem">Puoi registrare più misurazioni nella stessa giornata</div>
     </div>
 
-    <!-- RESULT -->
-    <div class="result-side">
-        <% if (risultato) { %>
-            <div class="result-card">
-                <div class="result-label">La tua impronta di oggi</div>
-                <div class="result-total"><%= risultato.totale %></div>
-                <div class="result-unit">kg di CO₂ emessi</div>
+    <div class="risultato-oggi-right">
+      <div class="result-card">
+        <div class="result-label">Dettaglio per categoria</div>
 
-                <div class="result-breakdown">
-                    <div class="breakdown-row">
-                        <span class="br-icon">🚗</span>
-                        <span class="br-name">Trasporto in auto</span>
-                        <span class="br-val"><%= risultato.dettaglio.km %> kg</span>
-                    </div>
-                    <div class="breakdown-row">
-                        <span class="br-icon">🍽️</span>
-                        <span class="br-name">Alimentazione</span>
-                        <span class="br-val"><%= risultato.dettaglio.pasto %> kg</span>
-                    </div>
-                </div>
+        <div class="result-breakdown">
+          <div class="breakdown-row">
+            <span class="br-icon">🚗</span>
+            <span class="br-name">Trasporto</span>
+            <span class="br-val"><%= risultato.dettaglio.trasporto %> kg</span>
+          </div>
+          <div class="breakdown-row">
+            <span class="br-icon">🍽️</span>
+            <span class="br-name">Pasto principale</span>
+            <span class="br-val"><%= risultato.dettaglio.pasto %> kg</span>
+          </div>
+          <div class="breakdown-row">
+            <span class="br-icon">🥩</span>
+            <span class="br-name">Abitudini carnee</span>
+            <span class="br-val"><%= risultato.dettaglio.frequenza_carne %> kg</span>
+          </div>
+          <div class="breakdown-row">
+            <span class="br-icon">⚡</span>
+            <span class="br-name">Energia domestica</span>
+            <span class="br-val"><%= risultato.dettaglio.energia %> kg</span>
+          </div>
+          <div class="breakdown-row">
+            <span class="br-icon">🌡️</span>
+            <span class="br-name">Riscaldamento / A/C</span>
+            <span class="br-val"><%= risultato.dettaglio.riscaldamento %> kg</span>
+          </div>
+          <div class="breakdown-row">
+            <span class="br-icon">🛍️</span>
+            <span class="br-name">Acquisti</span>
+            <span class="br-val"><%= risultato.dettaglio.shopping %> kg</span>
+          </div>
+        </div>
+      </div>
 
-                <div class="equiv-box">
-                    💡 Equivale a circa <strong><%= (risultato.totale / 0.06).toFixed(0) %> ore</strong> di una lampadina accesa,
-                    oppure a <strong><%= (risultato.totale / 22).toFixed(3) %></strong> alberi necessari per assorbirlo in un anno.
-                </div>
-
-                <%
-                    var tot = parseFloat(risultato.totale);
-                    var verdictClass = tot < 2 ? 'verdict-low' : tot < 5 ? 'verdict-mid' : 'verdict-high';
-                    var verdictMsg = tot < 2
-                        ? '✅ Ottimo! La tua impronta oggi è bassa. Continua così!'
-                        : tot < 5
-                        ? '⚠️ Nella media. Piccoli aggiustamenti possono fare la differenza.'
-                        : '🔴 Alta impronta. Considera alternative sostenibili per trasporto e alimentazione.';
-                %>
-                <div class="verdict <%= verdictClass %>">
-                    <%= verdictMsg %>
-                </div>
-            </div>
-        <% } else { %>
-            <div class="result-placeholder">
-                <div class="ph-icon">🌍</div>
-                <p>Compila il modulo e premi <em>"Calcola"</em> per vedere la tua impronta ecologica di oggi con la relativa analisi.</p>
-            </div>
-        <% } %>
+      <% if (storico && storico.length > 0) { %>
+      <div class="storico-section" style="margin-top:1.5rem">
+        <div class="storico-title">📊 Le tue ultime misurazioni</div>
+        <% storico.forEach(function(s) { %>
+          <%
+            var st = parseFloat(s.risultato.totale);
+            var bc = st < 2 ? 'badge-low' : st < 5 ? 'badge-mid' : 'badge-high';
+            var bl = st < 2 ? 'Bassa' : st < 5 ? 'Media' : 'Alta';
+            var d = new Date(s.data);
+            var ds = d.toLocaleDateString('it-IT', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+          %>
+          <div class="storico-row">
+            <span class="storico-date"><%= ds %></span>
+            <span class="storico-val"><%= s.risultato.totale %> kg</span>
+            <span class="storico-badge <%= bc %>"><%= bl %></span>
+          </div>
+        <% }); %>
+      </div>
+      <% } %>
     </div>
-</div>
+  </div>
+
+<% } else { %>
+  <!-- ─── FORM ─── -->
+  <div class="form-side">
+    <div class="page-tag">🌱 Calcolatore CO₂</div>
+    <h1>Misura la tua<br><em>impronta</em><br>di oggi</h1>
+
+    <form action="/calcola" method="POST">
+
+      <!-- SEZIONE 1: Trasporti -->
+      <div class="section-divider">🚗 Trasporti</div>
+
+      <div class="form-group transport-row">
+        <div>
+          <label for="trasporto_tipo">Mezzo usato</label>
+          <select id="trasporto_tipo" name="trasporto_tipo">
+            <option value="bici_km"            <%= (form.trasporto_tipo === 'bici_km' || !form.trasporto_tipo) ? 'selected' : '' %>>🚲 Bici / Piedi</option>
+            <option value="bus_km"             <%= form.trasporto_tipo === 'bus_km' ? 'selected' : '' %>>🚌 Autobus</option>
+            <option value="treno_km"           <%= form.trasporto_tipo === 'treno_km' ? 'selected' : '' %>>🚆 Treno</option>
+            <option value="moto_km"            <%= form.trasporto_tipo === 'moto_km' ? 'selected' : '' %>>🛵 Moto / Scooter</option>
+            <option value="auto_ibrida_km"     <%= form.trasporto_tipo === 'auto_ibrida_km' ? 'selected' : '' %>>🔋 Auto ibrida</option>
+            <option value="auto_elettrica_km"  <%= form.trasporto_tipo === 'auto_elettrica_km' ? 'selected' : '' %>>⚡ Auto elettrica</option>
+            <option value="auto_diesel_km"     <%= form.trasporto_tipo === 'auto_diesel_km' ? 'selected' : '' %>>🚗 Auto diesel</option>
+            <option value="auto_benzina_km"    <%= form.trasporto_tipo === 'auto_benzina_km' ? 'selected' : '' %>>⛽ Auto benzina</option>
+          </select>
+        </div>
+        <div>
+          <label for="trasporto_km">Km percorsi oggi</label>
+          <input type="number" id="trasporto_km" name="trasporto_km"
+            placeholder="es. 25" min="0" step="0.5"
+            value="<%= form.trasporto_km || '' %>">
+        </div>
+      </div>
+
+      <!-- SEZIONE 2: Alimentazione -->
+      <div class="section-divider">🍽️ Alimentazione</div>
+
+      <div class="form-group">
+        <label>Pasto principale oggi</label>
+        <div class="diet-options">
+          <label class="diet-btn <%= (form.pasto === 'vegano' || !form.pasto) ? 'active' : '' %>">
+            <input type="radio" name="pasto" value="vegano" <%= (form.pasto === 'vegano' || !form.pasto) ? 'checked' : '' %>>
+            <span class="d-emoji">🥦</span>
+            <span>Vegano</span>
+          </label>
+          <label class="diet-btn <%= form.pasto === 'vegetariano' ? 'active' : '' %>">
+            <input type="radio" name="pasto" value="vegetariano" <%= form.pasto === 'vegetariano' ? 'checked' : '' %>>
+            <span class="d-emoji">🥚</span>
+            <span>Vegetariano</span>
+          </label>
+          <label class="diet-btn <%= form.pasto === 'pesce' ? 'active' : '' %>">
+            <input type="radio" name="pasto" value="pesce" <%= form.pasto === 'pesce' ? 'checked' : '' %>>
+            <span class="d-emoji">🐟</span>
+            <span>Pesce</span>
+          </label>
+          <label class="diet-btn <%= form.pasto === 'pollo' ? 'active' : '' %>">
+            <input type="radio" name="pasto" value="pollo" <%= form.pasto === 'pollo' ? 'checked' : '' %>>
+            <span class="d-emoji">🍗</span>
+            <span>Pollo</span>
+          </label>
+          <label class="diet-btn <%= form.pasto === 'carne_lavorata' ? 'active' : '' %>">
+            <input type="radio" name="pasto" value="carne_lavorata" <%= form.pasto === 'carne_lavorata' ? 'checked' : '' %>>
+            <span class="d-emoji">🌭</span>
+            <span>Salumi</span>
+          </label>
+          <label class="diet-btn <%= form.pasto === 'carne_rossa' ? 'active' : '' %>">
+            <input type="radio" name="pasto" value="carne_rossa" <%= form.pasto === 'carne_rossa' ? 'checked' : '' %>>
+            <span class="d-emoji">🥩</span>
+            <span>Carne rossa</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="frequenza_carne">Quante volte mangi carne a settimana?</label>
+        <select id="frequenza_carne" name="frequenza_carne">
+          <option value="mai"         <%= (form.frequenza_carne === 'mai' || !form.frequenza_carne) ? 'selected' : '' %>>🌿 Mai — dieta plant-based</option>
+          <option value="raramente"   <%= form.frequenza_carne === 'raramente' ? 'selected' : '' %>>1–2 volte a settimana</option>
+          <option value="qualche_volta" <%= form.frequenza_carne === 'qualche_volta' ? 'selected' : '' %>>3–4 volte a settimana</option>
+          <option value="ogni_giorno" <%= form.frequenza_carne === 'ogni_giorno' ? 'selected' : '' %>>🥩 Ogni giorno</option>
+        </select>
+      </div>
+
+      <!-- SEZIONE 3: Energia -->
+      <div class="section-divider">⚡ Energia domestica</div>
+
+      <div class="form-group">
+        <label for="energia">Fonte di energia in casa</label>
+        <select id="energia" name="energia">
+          <option value="rinnovabile" <%= form.energia === 'rinnovabile' ? 'selected' : '' %>>☀️ Rinnovabile (solare, eolico...)</option>
+          <option value="misto"       <%= (form.energia === 'misto' || !form.energia) ? 'selected' : '' %>>⚡ Mix rete nazionale</option>
+          <option value="fossile"     <%= form.energia === 'fossile' ? 'selected' : '' %>>🏭 Prevalentemente fossile</option>
+          <option value="non_so"      <%= form.energia === 'non_so' ? 'selected' : '' %>>❓ Non lo so</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="riscaldamento">Uso riscaldamento / condizionatore oggi</label>
+        <select id="riscaldamento" name="riscaldamento">
+          <option value="nessuno" <%= (form.riscaldamento === 'nessuno' || !form.riscaldamento) ? 'selected' : '' %>>❌ Non usato</option>
+          <option value="basso"   <%= form.riscaldamento === 'basso' ? 'selected' : '' %>>🌡️ Basso (poche ore)</option>
+          <option value="medio"   <%= form.riscaldamento === 'medio' ? 'selected' : '' %>>🏠 Medio (mezza giornata)</option>
+          <option value="alto"    <%= form.riscaldamento === 'alto' ? 'selected' : '' %>>🔥 Alto (tutta la giornata)</option>
+        </select>
+      </div>
+
+      <!-- SEZIONE 4: Shopping -->
+      <div class="section-divider">🛍️ Acquisti del giorno</div>
+
+      <div class="form-group">
+        <label for="shopping">Hai fatto acquisti oggi?</label>
+        <select id="shopping" name="shopping">
+          <option value="nessuno"       <%= (form.shopping === 'nessuno' || !form.shopping) ? 'selected' : '' %>>✅ Nessun acquisto</option>
+          <option value="libri_carta"   <%= form.shopping === 'libri_carta' ? 'selected' : '' %>>📚 Libri / Cancelleria</option>
+          <option value="vestiti_usato" <%= form.shopping === 'vestiti_usato' ? 'selected' : '' %>>👗 Abbigliamento usato</option>
+          <option value="accessori"     <%= form.shopping === 'accessori' ? 'selected' : '' %>>👜 Accessori / calzature</option>
+          <option value="vestiti_nuovo" <%= form.shopping === 'vestiti_nuovo' ? 'selected' : '' %>>🏪 Abbigliamento nuovo</option>
+          <option value="elettronica"   <%= form.shopping === 'elettronica' ? 'selected' : '' %>>📱 Elettronica / gadget</option>
+        </select>
+        <div class="input-hint">L'impatto include produzione e trasporto del bene</div>
+      </div>
+
+      <button type="submit" class="submit-btn">Calcola il mio impatto →</button>
+    </form>
+
+    <!-- STORICO -->
+    <% if (storico && storico.length > 0) { %>
+    <div class="storico-section">
+      <div class="storico-title">📊 Le tue ultime misurazioni</div>
+      <% storico.forEach(function(s) { %>
+        <%
+          var tot = parseFloat(s.risultato.totale);
+          var badgeClass = tot < 2 ? 'badge-low' : tot < 5 ? 'badge-mid' : 'badge-high';
+          var badgeLabel = tot < 2 ? 'Bassa' : tot < 5 ? 'Media' : 'Alta';
+          var d = new Date(s.data);
+          var dateStr = d.toLocaleDateString('it-IT', { day: '2-digit', month: 'short' });
+        %>
+        <div class="storico-row">
+          <span class="storico-date"><%= dateStr %></span>
+          <span class="storico-val"><%= s.risultato.totale %> kg CO₂</span>
+          <span class="storico-badge <%= badgeClass %>"><%= badgeLabel %></span>
+        </div>
+      <% }); %>
+    </div>
+    <% } %>
+
+  </div><!-- /form-side -->
+
+  <!-- ─── RESULT (solo in modalità form) ─── -->
+  <div class="result-side">
+    <div class="result-placeholder">
+      <div class="ph-icon">🌍</div>
+      <p>Compila il questionario e premi <em>"Calcola"</em> per vedere la tua impronta ecologica di oggi.</p>
+      <p style="margin-top:1rem; font-size:.8rem; opacity:.5;">I risultati vengono salvati automaticamente nel tuo profilo.</p>
+    </div>
+  </div>
+
+<% } %> <!-- fine else (non giaCompilato) -->
+
+</div><!-- /page-wrap -->
 
 <script>
-    // Diet button toggle visual
-    document.querySelectorAll('.diet-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.diet-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-        });
+  // Diet button toggle
+  document.querySelectorAll('.diet-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.diet-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
     });
+  });
 </script>
 
 </body>

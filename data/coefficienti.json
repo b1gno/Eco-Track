@@ -1,17 +1,53 @@
 {
   "transport": {
-    "auto_km": 0.12,
+    "auto_benzina_km": 0.12,
+    "auto_diesel_km": 0.10,
+    "auto_ibrida_km": 0.07,
+    "auto_elettrica_km": 0.05,
+    "moto_km": 0.09,
     "bus_km": 0.03,
-    "train_km": 0.02,
-    "bike_km": 0
+    "treno_km": 0.02,
+    "bici_km": 0,
+    "piedi_km": 0
   },
   "food": {
     "vegano": 0.5,
     "vegetariano": 1.2,
-    "carne": 3.5,
-    "pesce": 2.8
+    "pesce": 2.8,
+    "pollo": 2.0,
+    "carne_rossa": 3.5,
+    "carne_lavorata": 3.0
   },
-  "energy": {
-    "kwh": 0.45
+  "shopping": {
+    "nessuno": 0,
+    "vestiti_usato": 1.5,
+    "vestiti_nuovo": 8.0,
+    "elettronica": 40.0,
+    "accessori": 5.0,
+    "libri_carta": 2.5
+  },
+  "energia": {
+    "rinnovabile": 0.05,
+    "misto": 0.25,
+    "fossile": 0.45,
+    "non_so": 0.30
+  },
+  "riscaldamento": {
+    "nessuno": 0,
+    "basso": 0.5,
+    "medio": 1.5,
+    "alto": 3.0
+  },
+  "voli_anno": {
+    "zero": 0,
+    "corto": 0.5,
+    "medio": 1.5,
+    "lungo": 4.5
+  },
+  "dieta_settimanale": {
+    "ogni_giorno": 1.0,
+    "qualche_volta": 0.5,
+    "raramente": 0.2,
+    "mai": 0
   }
 }

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= mode === 'login' ? 'Accedi' : 'Registrati' %> | EcoTrack</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body>
+
+<div class="auth-layout">
+
+  <!-- LEFT PANEL: branding -->
+  <div class="auth-brand">
+    <div class="brand-grid"></div>
+    <div class="brand-orb"></div>
+    <div class="brand-content">
+      <a href="/" class="nav-logo">Eco<span>Track</span></a>
+      <h2 class="brand-title">
+        Ogni scelta<br>
+        <em>lascia un segno.</em>
+      </h2>
+      <p class="brand-sub">Misura la tua impronta di carbonio quotidiana e scopri come vivere in modo più sostenibile.</p>
+
+      <div class="brand-stats">
+        <div class="bs-item">
+          <div class="bs-num">4.7t</div>
+          <div class="bs-label">CO₂ media italiana/anno</div>
+        </div>
+        <div class="bs-item">
+          <div class="bs-num">SDG 12</div>
+          <div class="bs-label">Consumo responsabile</div>
+        </div>
+      </div>
+
+      <div class="brand-leaf">🌿</div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL: form -->
+  <div class="auth-form-panel">
+    <div class="auth-box">
+
+      <div class="auth-tabs">
+        <a href="/login" class="auth-tab <%= mode === 'login' ? 'active' : '' %>">Accedi</a>
+        <a href="/register" class="auth-tab <%= mode === 'register' ? 'active' : '' %>">Registrati</a>
+      </div>
+
+      <% if (error) { %>
+        <div class="auth-alert auth-alert-err">⚠️ <%= error %></div>
+      <% } %>
+      <% if (success) { %>
+        <div class="auth-alert auth-alert-ok">✅ <%= success %></div>
+      <% } %>
+
+      <!-- LOGIN FORM -->
+      <% if (mode === 'login') { %>
+      <form action="/login" method="POST" class="auth-fields">
+        <div class="field-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="tua@email.it" required autocomplete="email">
+        </div>
+        <div class="field-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="••••••••" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="auth-submit">Accedi →</button>
+        <p class="auth-switch">Non hai un account? <a href="/register">Registrati gratis</a></p>
+      </form>
+
+      <!-- REGISTER FORM -->
+      <% } else { %>
+      <form action="/register" method="POST" class="auth-fields">
+        <div class="field-group">
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" name="nome" placeholder="Il tuo nome" required autocomplete="given-name">
+        </div>
+        <div class="field-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="tua@email.it" required autocomplete="email">
+        </div>
+        <div class="field-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Min. 6 caratteri" required autocomplete="new-password">
+        </div>
+        <div class="field-group">
+          <label for="conferma">Conferma password</label>
+          <input type="password" id="conferma" name="conferma" placeholder="••••••••" required autocomplete="new-password">
+        </div>
+        <button type="submit" class="auth-submit">Crea account →</button>
+        <p class="auth-switch">Hai già un account? <a href="/login">Accedi</a></p>
+      </form>
+      <% } %>
+
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
