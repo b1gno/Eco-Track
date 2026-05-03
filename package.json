@@ -13,6 +13,15 @@
     "axios": "^1.15.2",
     "ejs": "^5.0.2",
     "express": "^5.2.1",
-    "node-fecth": "^0.0.1-security"
-  }
+    "node-fecth": "^0.0.1-security",
+    "node-fetch": "^3.3.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/b1gno/Eco-Track.git"
+  },
+  "bugs": {
+    "url": "https://github.com/b1gno/Eco-Track/issues"
+  },
+  "homepage": "https://github.com/b1gno/Eco-Track#readme"
 }

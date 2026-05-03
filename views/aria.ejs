@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qualità dell'Aria | EcoTrack</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <link rel="stylesheet" href="/css/aria.css">
+</head>
+<body>
+
+<nav>
+    <a href="/" class="nav-logo">Eco<span>Track</span></a>
+    <a href="/" class="back-link">← Torna alla home</a>
+</nav>
+
+<div class="page-wrap">
+
+    <!-- HEADER -->
+    <div class="page-header">
+        <div class="page-tag">🌬️ Monitoraggio in tempo reale</div>
+        <h1>Qualità dell'<em>Aria</em> in Italia</h1>
+        <p class="page-desc">
+            Dati aggiornati in tempo reale dalle stazioni di rilevamento WAQI.
+            Seleziona una città per esplorare i livelli di inquinamento atmosferico.
+        </p>
+    </div>
+
+    <!-- LIVE BADGE -->
+    <div class="live-indicator">
+        <span class="live-dot"></span>
+        <span>Dati live — aggiornati automaticamente</span>
+    </div>
+
+    <!-- CITY BUTTONS -->
+    <div id="leaflet-locations" class="city-buttons"></div>
+
+    <!-- MAP + SIDEBAR -->
+    <div class="map-layout">
+
+        <!-- MAP -->
+        <div class="map-wrapper">
+            <div id="leaflet-map"></div>
+            <div id="leaflet-map-error" class="map-error" style="display:none"></div>
+        </div>
+
+        <!-- SIDEBAR: AQI LEGEND + CITY INFO -->
+        <div class="map-sidebar">
+
+            <!-- Current City AQI Panel -->
+            <div class="aqi-panel" id="aqi-panel">
+                <div class="aqi-panel-label">Città selezionata</div>
+                <div class="aqi-city-name" id="aqi-city-name">—</div>
+                <div class="aqi-big" id="aqi-value">—</div>
+                <div class="aqi-status-badge" id="aqi-badge">Seleziona una città</div>
+                <div class="aqi-pollutants" id="aqi-pollutants"></div>
+                <div class="aqi-updated" id="aqi-updated"></div>
+            </div>
+
+            <!-- AQI LEGEND -->
+            <div class="legend-card">
+                <div class="legend-title">Indice AQI — Legenda</div>
+                <div class="legend-rows">
+                    <div class="legend-row">
+                        <div class="legend-dot" style="background:#00e400"></div>
+                        <div class="legend-range">0 – 50</div>
+                        <div class="legend-label">Buona</div>
+                    </div>
+                    <div class="legend-row">
+                        <div class="legend-dot" style="background:#ffff00"></div>
+                        <div class="legend-range">51 – 100</div>
+                        <div class="legend-label">Moderata</div>
+                    </div>
+                    <div class="legend-row">
+                        <div class="legend-dot" style="background:#ff7e00"></div>
+                        <div class="legend-range">101 – 150</div>
+                        <div class="legend-label">Non salutare (sensibili)</div>
+                    </div>
+                    <div class="legend-row">
+                        <div class="legend-dot" style="background:#ff0000"></div>
+                        <div class="legend-range">151 – 200</div>
+                        <div class="legend-label">Non salutare</div>
+                    </div>
+                    <div class="legend-row">
+                        <div class="legend-dot" style="background:#99004c"></div>
+                        <div class="legend-range">201 – 300</div>
+                        <div class="legend-label">Molto non salutare</div>
+                    </div>
+                    <div class="legend-row">
+                        <div class="legend-dot" style="background:#7e0023"></div>
+                        <div class="legend-range">301+</div>
+                        <div class="legend-label">Pericolosa</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- INFO SECTION -->
+    <div class="info-section">
+        <div class="info-grid">
+
+            <div class="info-card">
+                <div class="info-icon">🫁</div>
+                <div class="info-title">Cos'è l'AQI?</div>
+                <div class="info-body">
+                    L'<strong>Air Quality Index</strong> è un numero che riassume la concentrazione di inquinanti nell'aria.
+                    Viene calcolato monitorando PM2.5, PM10, NO₂, O₃, SO₂ e CO. Più è alto, peggiore è la qualità
+                    dell'aria e più gravi i rischi per la salute.
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon">🌫️</div>
+                <div class="info-title">PM2.5 e PM10</div>
+                <div class="info-body">
+                    Le <strong>polveri sottili</strong> sono particelle microscopiche prodotte da traffico, industria e riscaldamento.
+                    Il PM2.5 è il più pericoloso: penetra nei polmoni e nel sangue, causando malattie respiratorie
+                    e cardiovascolari. L'OMS raccomanda meno di 15 µg/m³ di media annua.
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon">🚗</div>
+                <div class="info-title">Traffico e inquinamento</div>
+                <div class="info-body">
+                    In Italia i <strong>trasporti</strong> contribuiscono al 23% delle emissioni climalteranti.
+                    Le città con più traffico — Milano, Roma, Torino — registrano picchi di NO₂ e PM10
+                    nelle ore di punta. Ridurre l'uso dell'auto abbassa sia la CO₂ che l'inquinamento locale.
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon">🌱</div>
+                <div class="info-title">Come proteggerti</div>
+                <div class="info-body">
+                    Nelle giornate con AQI elevato: <strong>evita l'attività fisica all'aperto</strong>, tieni le finestre chiuse
+                    nelle ore di punta, usa mezzi pubblici o la bicicletta. Ogni scelta sostenibile migliora
+                    la qualità dell'aria per tutta la comunità.
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- LINK TO CALCULATOR -->
+    <div class="cta-strip">
+        <div>
+            <div class="cta-strip-title">La tua mobilità impatta l'aria che respiri</div>
+            <div class="cta-strip-sub">Calcola quanta CO₂ produci ogni giorno con i tuoi spostamenti</div>
+        </div>
+        <a href="/calcola" class="cta-strip-btn">Calcola la tua impronta →</a>
+    </div>
+
+</div>
+
+<footer>
+    <div>© 2026 <strong class="brand">EcoTrack</strong> · Fornaciari Matteo - Lorenzo Bignotti - Nicolò Lamanuzzi</div>
+    <div>Dati WAQI · <a href="https://waqi.info" target="_blank">waqi.info</a> · OpenStreetMap</div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/js/aria.js"></script>
+
+</body>
+</html>

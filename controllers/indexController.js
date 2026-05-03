@@ -27,3 +27,6 @@ exports.postCalcola = (req, res) => {
   res.render('calcola', { risultato: calcolo, km, pasto });
 };
  
+exports.getAria = (req, res) => {
+  res.render('aria');
+};
