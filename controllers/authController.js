@@ -1,28 +1,6 @@
-const fs = require('fs');
-const path = require('path');
 const { v4: uuidv4 } = require('uuid');
-const crypto = require('crypto');
+const authModel = require('../models/authModel');
 
-const USERS_PATH = path.join(__dirname, '../data/users.json');
-
-// --- Helpers ---
-const readUsers = () => {
-  try {
-    return JSON.parse(fs.readFileSync(USERS_PATH, 'utf8'));
-  } catch {
-    return [];
-  }
-};
-
-const writeUsers = (users) => {
-  fs.writeFileSync(USERS_PATH, JSON.stringify(users, null, 2), 'utf8');
-};
-
-const hashPassword = (password) => {
-  return crypto.createHash('sha256').update(password + 'ecotrack_salt_2026').digest('hex');
-};
-
-// --- Controllers ---
 exports.getLogin = (req, res) => {
   if (req.session && req.session.userId) return res.redirect('/calcola');
   res.render('auth', { mode: 'login', error: null, success: null });
@@ -35,10 +13,9 @@ exports.getRegister = (req, res) => {
 
 exports.postLogin = (req, res) => {
   const { email, password } = req.body;
-  const users = readUsers();
-  const user = users.find(u => u.email === email.toLowerCase().trim());
+  const user = authModel.findByEmail(email);
 
-  if (!user || user.passwordHash !== hashPassword(password)) {
+  if (!user || user.passwordHash !== authModel.hashPassword(password)) {
     return res.render('auth', {
       mode: 'login',
       error: 'Email o password errati. Riprova.',
@@ -53,7 +30,6 @@ exports.postLogin = (req, res) => {
 
 exports.postRegister = (req, res) => {
   const { nome, email, password, conferma } = req.body;
-  const users = readUsers();
 
   if (!nome || !email || !password) {
     return res.render('auth', { mode: 'register', error: 'Compila tutti i campi.', success: null });
@@ -64,20 +40,16 @@ exports.postRegister = (req, res) => {
   if (password.length < 6) {
     return res.render('auth', { mode: 'register', error: 'La password deve essere di almeno 6 caratteri.', success: null });
   }
-  if (users.find(u => u.email === email.toLowerCase().trim())) {
+  if (authModel.emailExists(email)) {
     return res.render('auth', { mode: 'register', error: 'Email già registrata. Prova ad accedere.', success: null });
   }
 
-  const newUser = {
+  authModel.createUser({
     id: uuidv4(),
     nome: nome.trim(),
     email: email.toLowerCase().trim(),
-    passwordHash: hashPassword(password),
-    createdAt: new Date().toISOString()
-  };
-
-  users.push(newUser);
-  writeUsers(users);
+    passwordHash: authModel.hashPassword(password)
+  });
 
   res.render('auth', {
     mode: 'login',
