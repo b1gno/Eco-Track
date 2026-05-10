@@ -1,4 +1,7 @@
-const { v4: uuidv4 } = require('uuid');
+let uuidv4;
+import('uuid').then(mod => {
+  uuidv4 = mod.v4;
+});
 const authModel = require('../models/authModel');
 
 exports.getLogin = (req, res) => {
