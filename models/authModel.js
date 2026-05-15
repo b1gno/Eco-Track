@@ -1,45 +1,32 @@
-const fs = require('fs');
-const path = require('path');
 const crypto = require('crypto');
+const { getDb } = require('./db');
 
-const USERS_PATH = path.join(__dirname, '../data/users.json');
-const RISULTATI_PATH = path.join(__dirname, '../data/risultati.json');
 const SALT = 'ecotrack_salt_2026';
 
-// --- Utenti ---
+// ── Helpers ──────────────────────────────────────────────
 
-const readUsers = () => {
-  try {
-    return JSON.parse(fs.readFileSync(USERS_PATH, 'utf8'));
-  } catch {
-    return [];
-  }
+exports.hashPassword = (password) =>
+  crypto.createHash('sha256').update(password + SALT).digest('hex');
+
+const usersCol  = () => getDb().collection('Users');
+const risultatiCol = () => getDb().collection('Results');
+
+// ── Utenti ───────────────────────────────────────────────
+
+exports.findByEmail = async (email) => {
+  return usersCol().findOne({ email: email.toLowerCase().trim() });
 };
 
-const writeUsers = (users) => {
-  fs.writeFileSync(USERS_PATH, JSON.stringify(users, null, 2), 'utf8');
+exports.findById = async (id) => {
+  return usersCol().findOne({ id });
 };
 
-exports.hashPassword = (password) => {
-  return crypto.createHash('sha256').update(password + SALT).digest('hex');
+exports.emailExists = async (email) => {
+  const user = await exports.findByEmail(email);
+  return user !== null;
 };
 
-exports.findByEmail = (email) => {
-  const users = readUsers();
-  return users.find(u => u.email === email.toLowerCase().trim()) || null;
-};
-
-exports.findById = (id) => {
-  const users = readUsers();
-  return users.find(u => u.id === id) || null;
-};
-
-exports.emailExists = (email) => {
-  return exports.findByEmail(email) !== null;
-};
-
-exports.createUser = (userData) => {
-  const users = readUsers();
+exports.createUser = async (userData) => {
   const newUser = {
     id: userData.id,
     nome: userData.nome.trim(),
@@ -47,40 +34,26 @@ exports.createUser = (userData) => {
     passwordHash: userData.passwordHash,
     createdAt: new Date().toISOString()
   };
-  users.push(newUser);
-  writeUsers(users);
+  await usersCol().insertOne(newUser);
   return newUser;
 };
 
-// --- Risultati ---
+// ── Risultati ────────────────────────────────────────────
 
-const readRisultati = () => {
-  try {
-    return JSON.parse(fs.readFileSync(RISULTATI_PATH, 'utf8'));
-  } catch {
-    return [];
-  }
+exports.getRisultatiByUserId = async (userId) => {
+  return risultatiCol()
+    .find({ userId })
+    .sort({ data: -1 })
+    .toArray();
 };
 
-const writeRisultati = (data) => {
-  fs.writeFileSync(RISULTATI_PATH, JSON.stringify(data, null, 2), 'utf8');
-};
-
-exports.getRisultatiByUserId = (userId) => {
-  const tutti = readRisultati();
-  return tutti
-    .filter(r => r.userId === userId)
-    .sort((a, b) => new Date(b.data) - new Date(a.data));
-};
-
-exports.getRisultatoOggi = (userId) => {
+exports.getRisultatoOggi = async (userId) => {
   const today = new Date().toISOString().slice(0, 10);
-  const risultati = exports.getRisultatiByUserId(userId);
+  const risultati = await exports.getRisultatiByUserId(userId);
   return risultati.find(r => r.data.slice(0, 10) === today) || null;
 };
 
-exports.createRisultato = (record) => {
-  const tutti = readRisultati();
+exports.createRisultato = async (record) => {
   const newRecord = {
     id: crypto.randomUUID(),
     userId: record.userId,
@@ -89,7 +62,6 @@ exports.createRisultato = (record) => {
     form: record.form,
     risultato: record.risultato
   };
-  tutti.push(newRecord);
-  writeRisultati(tutti);
+  await risultatiCol().insertOne(newRecord);
   return newRecord;
 };
