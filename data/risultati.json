@@ -1,0 +1,28 @@
+[
+  {
+    "id": "162d1d04-0f7c-42f2-9a10-a39da4bcf366",
+    "userId": "572af863-17e6-401a-8d02-e9ebcbedde1c",
+    "userName": "LORENZO",
+    "data": "2026-05-03T18:27:39.480Z",
+    "form": {
+      "trasporto_tipo": "auto_benzina_km",
+      "trasporto_km": "25",
+      "pasto": "pollo",
+      "frequenza_carne": "qualche_volta",
+      "energia": "misto",
+      "riscaldamento": "nessuno",
+      "shopping": "nessuno"
+    },
+    "risultato": {
+      "totale": "5.75",
+      "dettaglio": {
+        "trasporto": "3.00",
+        "pasto": "2.00",
+        "shopping": "0.00",
+        "energia": "0.25",
+        "riscaldamento": "0.00",
+        "frequenza_carne": "0.50"
+      }
+    }
+  }
+]

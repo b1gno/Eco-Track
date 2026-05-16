@@ -1,7 +1,6 @@
 let uuidv4;
-import('uuid').then(mod => {
-  uuidv4 = mod.v4;
-});
+import('uuid').then(mod => { uuidv4 = mod.v4; });
+
 const authModel = require('../models/authModel');
 
 exports.getLogin = (req, res) => {
@@ -14,24 +13,27 @@ exports.getRegister = (req, res) => {
   res.render('auth', { mode: 'register', error: null, success: null });
 };
 
-exports.postLogin = (req, res) => {
+exports.postLogin = async (req, res) => {
   const { email, password } = req.body;
-  const user = authModel.findByEmail(email);
-
-  if (!user || user.passwordHash !== authModel.hashPassword(password)) {
-    return res.render('auth', {
-      mode: 'login',
-      error: 'Email o password errati. Riprova.',
-      success: null
-    });
+  try {
+    const user = await authModel.findByEmail(email);
+    if (!user || user.passwordHash !== authModel.hashPassword(password)) {
+      return res.render('auth', {
+        mode: 'login',
+        error: 'Email o password errati. Riprova.',
+        success: null
+      });
+    }
+    req.session.userId = user.id;
+    req.session.userName = user.nome;
+    res.redirect('/calcola');
+  } catch (err) {
+    console.error('Login error:', err);
+    res.render('auth', { mode: 'login', error: 'Errore interno. Riprova.', success: null });
   }
-
-  req.session.userId = user.id;
-  req.session.userName = user.nome;
-  res.redirect('/calcola');
 };
 
-exports.postRegister = (req, res) => {
+exports.postRegister = async (req, res) => {
   const { nome, email, password, conferma } = req.body;
 
   if (!nome || !email || !password) {
@@ -43,26 +45,24 @@ exports.postRegister = (req, res) => {
   if (password.length < 6) {
     return res.render('auth', { mode: 'register', error: 'La password deve essere di almeno 6 caratteri.', success: null });
   }
-  if (authModel.emailExists(email)) {
-    return res.render('auth', { mode: 'register', error: 'Email già registrata. Prova ad accedere.', success: null });
+
+  try {
+    if (await authModel.emailExists(email)) {
+      return res.render('auth', { mode: 'register', error: 'Email già registrata. Prova ad accedere.', success: null });
+    }
+    await authModel.createUser({
+      id: uuidv4(),
+      nome: nome.trim(),
+      email: email.toLowerCase().trim(),
+      passwordHash: authModel.hashPassword(password)
+    });
+    res.render('auth', { mode: 'login', error: null, success: 'Registrazione completata! Accedi ora.' });
+  } catch (err) {
+    console.error('Register error:', err);
+    res.render('auth', { mode: 'register', error: 'Errore interno. Riprova.', success: null });
   }
-
-  authModel.createUser({
-    id: uuidv4(),
-    nome: nome.trim(),
-    email: email.toLowerCase().trim(),
-    passwordHash: authModel.hashPassword(password)
-  });
-
-  res.render('auth', {
-    mode: 'login',
-    error: null,
-    success: 'Registrazione completata! Accedi ora.'
-  });
 };
 
 exports.logout = (req, res) => {
-  req.session.destroy(() => {
-    res.redirect('/login');
-  });
+  req.session.destroy(() => res.redirect('/login'));
 };
